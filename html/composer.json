@@ -1,0 +1,11 @@
+{
+    "name": "pich/architect-mate",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Krzysztof Pich",
+            "email": "kontakt@pich.pl"
+        }
+    ],
+    "require": {}
+}

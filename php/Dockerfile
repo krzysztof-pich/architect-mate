@@ -1,8 +1,9 @@
 FROM php:7.3.6-fpm-alpine3.9
-RUN adduser -S kpich
 
 RUN apk update; \
     apk upgrade;
+
+RUN apk add --no-cache shadow && useradd -ms /bin/bash kpich && usermod -u 1000 kpich && groupmod -g 1000 kpich
 
 RUN apk add --no-cache curl git zip bash
 RUN apk add --co-cache composer
