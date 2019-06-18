@@ -1,11 +1,20 @@
 {
     "name": "pich/architect-mate",
     "type": "project",
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "7.3"
+        }
+    },
     "authors": [
         {
             "name": "Krzysztof Pich",
             "email": "kontakt@pich.pl"
         }
     ],
-    "require": {}
+    "require": {
+        "php": "7.3.*",
+        "symfony/dependency-injection": "^4.3"
+    }
 }
