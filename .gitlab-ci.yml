@@ -1,0 +1,7 @@
+image: php73-kpich:latest
+
+before_script:
+    - composer install
+    
+test:
+    - ./vendor/bin/phpunit --configuration phpunit.xml --testsuite all
