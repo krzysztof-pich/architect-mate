@@ -1,6 +1,7 @@
 image: php73-kpich:latest
 
 before_script:
+    - cd html
     - composer install
     
 test:
