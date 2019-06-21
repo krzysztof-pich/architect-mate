@@ -11,6 +11,8 @@ class IndexTest extends \PHPUnit\Framework\TestCase
     public function testMainController()
     {
         $indexController = new Index();
-        $this->assertInstanceOf(Index::class, $indexController);
+
+        $this->assertEquals('Hello World!', $indexController->execute());
+
     }
 }

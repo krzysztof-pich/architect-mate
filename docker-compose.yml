@@ -2,6 +2,7 @@ version: "3"
 services:
   php:
     build: './php'
+    container_name: php
     networks:
       - backend
     volumes:
@@ -10,6 +11,7 @@ services:
       XDEBUG_CONFIG: remote_host=192.168.1.129
   apache:
     build: './apache/'
+    container_name: apache
     depends_on:
       - php
       - mysql
@@ -22,6 +24,7 @@ services:
       - ./html/:/var/www/html/
   mysql:
     image: mysql:5.7.26
+    container_name: db
     networks:
       - backend
     ports:
