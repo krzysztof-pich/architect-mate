@@ -1,16 +1,16 @@
 version: "3"
 services:
   php:
-    build: './php'
+    image: kpich/personal:php73
     container_name: php
     networks:
       - backend
     volumes:
       - ./html/:/var/www/html/
     environment:
-      XDEBUG_CONFIG: remote_host=192.168.1.129
+      XDEBUG_CONFIG: remote_host=11.11.11.3
   apache:
-    build: './apache/'
+    image: kpich/personal:apache-localhost
     container_name: apache
     depends_on:
       - php
