@@ -1,4 +1,4 @@
-image: php73-kpich:latest
+image: kpich/personal:php73
 
 before_script:
     - cd html
