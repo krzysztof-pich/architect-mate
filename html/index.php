@@ -6,6 +6,7 @@ $container = require __DIR__ . '/src/bootstrap.php';
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/', 'Pich\Main\Controller\Index');
+    $r->addRoute('GET', '/repository', 'Pich\Repository\Controller\Index');
 });
 $route = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 switch ($route[0]) {
