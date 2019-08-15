@@ -10,6 +10,8 @@
         <whitelist>
             <directory suffix=".php">src</directory>
             <exclude>
+                <directory suffix=".php">src/*/*/Config</directory>
+                <directory suffix=".php">src/*/*/Tests</directory>
             </exclude>
         </whitelist>
     </filter>

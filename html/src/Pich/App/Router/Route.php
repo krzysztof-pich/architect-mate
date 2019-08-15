@@ -4,7 +4,7 @@ namespace Pich\App\Router;
 
 use Pich\App\Controller\ControllerInterface;
 
-class Route
+class Route implements RouteInterface
 {
     /**
      * @var string
