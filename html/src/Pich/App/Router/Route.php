@@ -2,7 +2,7 @@
 
 namespace Pich\App\Router;
 
-use Pich\App\Controller\ControllerInterface;
+use Pich\App\Action\ActionInterface;
 
 class Route implements RouteInterface
 {
@@ -15,11 +15,11 @@ class Route implements RouteInterface
      */
     private $path;
     /**
-     * @var ControllerInterface
+     * @var ActionInterface
      */
     private $controller;
 
-    public function __construct(string $method, string $path, ControllerInterface $controller)
+    public function __construct(string $method, string $path, ActionInterface $controller)
     {
         if (!in_array($method, ['POST', 'GET'])) {
             throw new \InvalidArgumentException('Invalid method in route: ' . $method);
@@ -40,7 +40,7 @@ class Route implements RouteInterface
         return $this->path;
     }
 
-    public function getController(): ControllerInterface
+    public function getController(): ActionInterface
     {
         return $this->controller;
     }

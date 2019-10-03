@@ -4,13 +4,13 @@ namespace Pich\App\Router;
 
 use PHPUnit\Framework\TestCase;
 use Phake as p;
-use Pich\App\Controller\ControllerInterface;
+use Pich\App\Action\ActionInterface;
 
 class RouteTest extends TestCase
 {
     public function testRoute()
     {
-        $controller = p::mock(ControllerInterface::class);
+        $controller = p::mock(ActionInterface::class);
         $route = new Route('GET', '/', $controller);
 
         $this->assertEquals('GET', $route->getMethod());
@@ -26,7 +26,7 @@ class RouteTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid method in route: invalid_method_name');
 
-        $controller = p::mock(ControllerInterface::class);
+        $controller = p::mock(ActionInterface::class);
         new Route('invalid_method_name', '/', $controller);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace Pich\App\Router;
 
+use Exception;
 use FastRoute\RouteCollector;
+use Pich\App\Action\ActionInterface;
 use Psr\Container\ContainerInterface;
 use function FastRoute\simpleDispatcher;
 
@@ -18,7 +20,11 @@ class Dispatcher
         $this->routes[] = $route;
     }
 
-    public function dispatch()
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function dispatch(): string
     {
         $routes = $this->routes;
         $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($routes) {
@@ -28,16 +34,15 @@ class Dispatcher
         });
         $route = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
         switch ($route[0]) {
-            case \FastRoute\Dispatcher::NOT_FOUND:
-                echo '404 Not Found';
-                break;
-            case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-                echo '405 Method Not Allowed';
-                break;
             case \FastRoute\Dispatcher::FOUND:
-                $controller = $route[1];
-                $parameters = $route[2];
-                echo $controller->execute($parameters);
+                /** @var ActionInterface $action */
+                $action = $route[1];
+                $parameters = (array)$route[2];
+                $response = $action->execute($parameters);
+                return $response->render();
+                break;
+            default:
+                throw new Exception('Not Found');
                 break;
         }
     }

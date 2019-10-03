@@ -2,16 +2,22 @@
 
 namespace Pich\Main\Tests\Controller;
 
-use Pich\Main\Controller\Index;
+use Pich\App\Response\ResponseInterface;
+use Pich\Main\Action\Index;
+use Phake as p;
+use Pich\Main\Responder\IndexResponder;
 
 class IndexTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testMainController()
     {
-        $indexController = new Index();
+        $response = p::mock(ResponseInterface::class);
+        $responder = p::mock(IndexResponder::class);
+        p::when($responder)->send()->thenReturn($response);
+        $indexAction = new Index($responder);
+        $indexAction->execute([]);
 
-        $this->assertEquals('Hello World!', $indexController->execute());
-
+        p::verify($responder)->send();
     }
 }

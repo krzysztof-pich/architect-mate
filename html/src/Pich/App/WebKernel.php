@@ -18,6 +18,7 @@ class WebKernel
 
     public function execute()
     {
-        $this->dispatcher->dispatch();
+        $response = $this->dispatcher->dispatch();
+        echo $response;
     }
 }

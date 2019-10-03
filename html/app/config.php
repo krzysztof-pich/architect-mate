@@ -1,11 +1,12 @@
 <?php
 use function DI\create;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 return [
-    // Bind an interface to an implementation
     // Configure Twig
-    Twig_Environment::class => function () {
-        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../src/SuperBlog/Views');
-        return new Twig_Environment($loader);
+    Environment::class => function () {
+        $loader = new FilesystemLoader([__DIR__ . '/../src/Pich', __DIR__ . '/layout']);
+        return new Environment($loader, ['cache' => __DIR__ . '/../var/cache/twig']);
     },
 ];

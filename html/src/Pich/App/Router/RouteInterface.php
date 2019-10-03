@@ -2,11 +2,11 @@
 
 namespace Pich\App\Router;
 
-use Pich\App\Controller\ControllerInterface;
+use Pich\App\Action\ActionInterface;
 
 interface RouteInterface
 {
     public function getMethod(): string;
     public function getPath(): string;
-    public function getController(): ControllerInterface;
+    public function getController(): ActionInterface;
 }
