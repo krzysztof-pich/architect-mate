@@ -1,5 +1,4 @@
 db/*
-!db/.gitkeep
 vendor/
 html/var/*
 !html/var/.gitkeep

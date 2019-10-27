@@ -3,6 +3,7 @@
 namespace Pich\Main\Action;
 
 use Pich\App\Action\ActionInterface;
+use Pich\App\Database;
 use Pich\App\Response\Http;
 use Pich\App\Response\ResponseInterface;
 use Pich\Main\Responder\IndexResponder;
@@ -13,10 +14,15 @@ class Index implements ActionInterface
      * @var IndexResponder
      */
     private $indexResponder;
+    /**
+     * @var Database
+     */
+    private $database;
 
-    public function __construct(IndexResponder $indexResponder)
+    public function __construct(IndexResponder $indexResponder, Database $database)
     {
         $this->indexResponder = $indexResponder;
+        $this->database = $database;
     }
 
     public function execute(array $request): ResponseInterface

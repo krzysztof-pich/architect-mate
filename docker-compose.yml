@@ -1,7 +1,7 @@
 version: "3"
 services:
   php:
-    image: kpich/personal:php73
+    build: '../docker/php73'
     container_name: php
     networks:
       - backend
@@ -34,6 +34,15 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=architect_mate
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    networks:
+      - backend
+    ports:
+      - 8181:80
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: root
 networks:
   frontend:
   backend:
