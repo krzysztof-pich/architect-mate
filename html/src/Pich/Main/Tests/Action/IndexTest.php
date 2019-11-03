@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Pich\Main\Tests\Controller;
+namespace Pich\Main\Tests\Action;
 
 use Pich\App\Response\ResponseInterface;
 use Pich\Main\Action\Index;

@@ -1,23 +1,22 @@
 <?php
 
-namespace Pich\Main\Tests\Responder;
+namespace Pich\Vcs\Tests\Responder;
 
 use Pich\App\Response\Http;
 use Pich\App\Response\ResponseInterface;
-use Pich\Main\Responder\IndexResponder;
+use Pich\Vcs\Responder\AddResponder;
 use PHPUnit\Framework\TestCase;
 use Phake as p;
 
-class IndexResponderTest extends TestCase
+class AddResponderTest extends TestCase
 {
-
     public function testSend()
     {
         $http = p::mock(Http::class);
 
-        $responder = new IndexResponder($http);
+        $responder = new AddResponder($http);
         $this->assertInstanceOf(ResponseInterface::class, $responder->send());
 
-        p::verify($http)->setTemplate('Main/Views/index.twig');
+        p::verify($http)->setTemplate('Vcs/Views/add.twig');
     }
 }
