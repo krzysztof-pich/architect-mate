@@ -14,15 +14,10 @@ class Index implements ActionInterface
      * @var IndexResponder
      */
     private $indexResponder;
-    /**
-     * @var Database
-     */
-    private $database;
 
-    public function __construct(IndexResponder $indexResponder, Database $database)
+    public function __construct(IndexResponder $indexResponder)
     {
         $this->indexResponder = $indexResponder;
-        $this->database = $database;
     }
 
     public function execute(array $request): ResponseInterface
