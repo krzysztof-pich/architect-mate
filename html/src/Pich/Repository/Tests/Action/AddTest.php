@@ -1,10 +1,10 @@
 <?php
 
-namespace Pich\Vcs\Tests\Action;
+namespace Pich\Repository\Tests\Action;
 
 use Pich\App\Response\ResponseInterface;
-use Pich\Vcs\Responder\AddResponder;
-use Pich\Vcs\Action\Add;
+use Pich\Repository\Responder\AddResponder;
+use Pich\Repository\Action\Add;
 use PHPUnit\Framework\TestCase;
 use Phake as p;
 

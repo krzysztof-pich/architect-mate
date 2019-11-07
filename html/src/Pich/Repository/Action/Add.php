@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Pich\Vcs\Action;
+namespace Pich\Repository\Action;
 
 use Pich\App\Action\ActionInterface;
 use Pich\App\Response\ResponseInterface;
-use Pich\Vcs\Responder\AddResponder;
+use Pich\Repository\Responder\AddResponder;
 
 class Add implements ActionInterface
 {

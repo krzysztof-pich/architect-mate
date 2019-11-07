@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Pich\Vcs\Responder;
+namespace Pich\Repository\Responder;
 
 use Pich\App\Response\Http;
 use Pich\App\Response\ResponseInterface;
@@ -19,7 +19,7 @@ class AddResponder
 
     public function send(): ResponseInterface
     {
-        $this->http->setTemplate('Vcs/Views/add.twig');
+        $this->http->setTemplate('Repository/Views/add.twig');
         return $this->http;
     }
 }
