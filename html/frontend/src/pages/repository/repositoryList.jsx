@@ -2,7 +2,6 @@ import React, {Component} from "react"
 import _ from 'lodash';
 import {getRepositories} from "../../services/repository";
 import RepositoriesTable from "../../components/repositoriesTable";
-import {Link} from "react-router-dom";
 import Toolbar from "../../components/view/toolbar";
 
 class RepositoryList extends Component {
