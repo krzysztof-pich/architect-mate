@@ -1,18 +1,19 @@
-import React, {Component} from 'react';
+import React from 'react';
+import Joi from "joi-browser";
 import TextInput from "./view/form/textInput";
 import TextareaInput from "./view/form/textareaInput";
 import SelectInput from "./view/form/selectInput";
-import Joi from "joi-browser";
+import Form from "./view/form/form";
 
-class RepositoryForm extends Component {
-    schema = Joi.object({
+class RepositoryForm extends Form {
+    schema = {
         name: Joi.string().required().label('Name'),
         description: Joi.string().allow('').label('Description'),
         path: Joi.string().required().label('Path'),
         type: Joi.string().required().label('Type')
-    });
+    };
     state = {
-        repository: {
+        data: {
             name: '',
             description: '',
             path: '',
@@ -21,37 +22,16 @@ class RepositoryForm extends Component {
         errors: {}
     };
 
-    handleChange = ({currentTarget: input}) => {
-        const repository = {...this.state.repository};
-        repository[input.name] = input.value;
-        this.setState({repository});
-    };
-
-    handleSubmit = e => {
-        this.validate();
-        console.log(this.state.errors);
-        e.preventDefault();
-    };
-
-    validate = () => {
-        const result = this.schema.validate(this.state.repository, {abortEarly: false});
-        if (!result.error) return null;
-
-        const errors = {};
-        for (let item of result.error.details) {
-            console.log(item);
-            errors[item.path[0]] = item.message;
-        }
-
-        this.setState({errors});
+    doSubmit = () => {
+        console.log('Submit form');
     };
 
     render() {
-        const {repository, errors} = this.state;
+        const {data, errors} = this.state;
         return (
             <form onSubmit={this.handleSubmit}>
                 <TextInput
-                    value={repository.name}
+                    value={data.name}
                     name="name"
                     label="Name"
                     placeholder="Repository name"
@@ -59,14 +39,14 @@ class RepositoryForm extends Component {
                     onChange={this.handleChange}
                 />
                 <TextareaInput
-                    value={repository.description}
+                    value={data.description}
                     name="description"
                     label="Description"
                     error={errors.description}
                     onChange={this.handleChange}
                 />
                 <TextInput
-                    value={repository.path}
+                    value={data.path}
                     name="path"
                     label="Path"
                     placeholder="Path to repository"
@@ -74,14 +54,14 @@ class RepositoryForm extends Component {
                     onChange={this.handleChange}
                 />
                 <SelectInput
-                    value={repository.type}
+                    value={data.type}
                     name="type"
                     label="Type"
                     options={[{'value': 'git', 'label': 'Git'}]}
                     error={errors.type}
                     onChange={this.handleChange}
                 />
-                <button type="submit" className="btn btn-primary">Save</button>
+                <button disabled={this.validate()} type="submit" className="btn btn-primary">Save</button>
             </form>
         );
     }
