@@ -61,7 +61,7 @@ class RepositoryForm extends Form {
                     error={errors.type}
                     onChange={this.handleChange}
                 />
-                <button disabled={this.validate()} type="submit" className="btn btn-primary">Save</button>
+                {this.renderButton('Save')}
             </form>
         );
     }
