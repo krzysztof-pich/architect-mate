@@ -1,8 +1,8 @@
 import React, {Component} from "react"
 import _ from 'lodash';
-import {getRepositories} from "../../services/repository";
 import RepositoriesTable from "../../components/repositoriesTable";
 import Toolbar from "../../components/view/toolbar";
+import axios from "axios";
 
 class RepositoryList extends Component {
     state = {
@@ -16,8 +16,9 @@ class RepositoryList extends Component {
         {name: 'Add new repository', path: '/repositories/new'}
     ];
 
-    componentDidMount() {
-        this.setState({repositories: getRepositories()})
+    async componentDidMount() {
+        const response = await axios.get('http://localhost/vcs/repository');
+        this.setState({repositories: response.data})
     }
 
     handleSort = sortColumn => {

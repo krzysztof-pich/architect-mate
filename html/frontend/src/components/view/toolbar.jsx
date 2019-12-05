@@ -9,7 +9,7 @@ class Toolbar extends Component {
             buttonsPart = (
                 <div className="btn-toolbar mb-2 mb-md-0">
                     {buttons.map(button => (
-                        <div className="btn-group mr-2">
+                        <div key={button.path} className="btn-group mr-2">
                             <Link className="btn btn-sm btn-outline-primary" to={button.path}>
                                 {button.name}
                             </Link>

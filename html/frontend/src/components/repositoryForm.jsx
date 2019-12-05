@@ -4,6 +4,7 @@ import TextInput from "./view/form/textInput";
 import TextareaInput from "./view/form/textareaInput";
 import SelectInput from "./view/form/selectInput";
 import Form from "./view/form/form";
+import axios from "axios";
 
 class RepositoryForm extends Form {
     schema = {
@@ -22,8 +23,9 @@ class RepositoryForm extends Form {
         errors: {}
     };
 
-    doSubmit = () => {
-        console.log('Submit form');
+    doSubmit = async () => {
+        const { data: repository } = await axios.post('http://localhost/vcs/repository', this.state.data);
+        console.log(repository);
     };
 
     render() {
