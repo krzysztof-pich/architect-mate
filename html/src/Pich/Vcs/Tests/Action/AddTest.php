@@ -4,7 +4,7 @@ namespace Pich\Repository\Tests\Action;
 
 use Pich\App\JsonResponder;
 use Pich\App\Response\ResponseInterface;
-use Pich\Repository\Action\Add;
+use Pich\Vcs\Action\Add;
 use PHPUnit\Framework\TestCase;
 use Phake as p;
 

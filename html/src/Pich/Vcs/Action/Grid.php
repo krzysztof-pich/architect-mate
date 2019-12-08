@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Pich\Repository\Action;
+namespace Pich\Vcs\Action;
 
 use Pich\App\Action\ActionInterface;
 use Pich\App\JsonResponder;

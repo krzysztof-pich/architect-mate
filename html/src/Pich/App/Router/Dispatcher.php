@@ -4,11 +4,9 @@ namespace Pich\App\Router;
 
 use Exception;
 use FastRoute\RouteCollector;
-use http\Env\Response;
 use Pich\App\Action\ActionInterface;
 use Pich\App\Response\JsonOptions;
 use Pich\App\Response\ResponseInterface;
-use Psr\Container\ContainerInterface;
 use function FastRoute\simpleDispatcher;
 
 class Dispatcher
