@@ -2,6 +2,7 @@
 
 namespace Pich\App;
 
+use Pich\App\Response\ResponseInterface;
 use Pich\App\Router\Dispatcher;
 
 class WebKernel
@@ -16,9 +17,8 @@ class WebKernel
         $this->dispatcher = $dispatcher;
     }
 
-    public function execute()
+    public function execute(): ResponseInterface
     {
-        $response = $this->dispatcher->dispatch();
-        echo $response;
+        return $this->dispatcher->dispatch();
     }
 }

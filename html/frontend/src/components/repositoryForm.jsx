@@ -24,7 +24,8 @@ class RepositoryForm extends Form {
     };
 
     doSubmit = async () => {
-        const { data: repository } = await axios.post('http://localhost/vcs/repository', this.state.data);
+        console.log(this.state.data);
+        const { data: repository } = await axios.post('http://localhost/vcs/repository', {name: 'test'});
         console.log(repository);
     };
 

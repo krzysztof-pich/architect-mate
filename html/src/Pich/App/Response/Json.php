@@ -9,15 +9,22 @@ class Json implements ResponseInterface
      */
     private $data;
 
-    public function setData(array $data = [])
+    public function setData(array $data = []): void
     {
         $this->data = $data;
     }
 
+    public function getHeaders(): array
+    {
+        return [
+            'Access-Control-Allow-Origin: *',
+            'Content-Type: application/json; charset=UTF-8',
+        ];
+    }
+
     public function render(): string
     {
-        header("Access-Control-Allow-Origin: *");
-        header("Content-Type: application/json; charset=UTF-8");
+
         return json_encode($this->data);
     }
 }

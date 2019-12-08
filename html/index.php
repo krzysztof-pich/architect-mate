@@ -4,4 +4,10 @@ use FastRoute\RouteCollector;
 /** @var \DI\Container $container */
 $container = require __DIR__ . '/app/bootstrap.php';
 
-$container->get('WebKernel')->execute();
+/** @var \Pich\App\WebKernel $webKernel */
+$webKernel = $container->get('WebKernel');
+$response = $webKernel->execute();
+foreach ($response->getHeaders() as $header) {
+    header($header);
+}
+echo $response->render();

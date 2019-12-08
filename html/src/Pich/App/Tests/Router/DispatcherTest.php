@@ -5,6 +5,7 @@ namespace Pich\App\Router;
 use Phake as p;
 use PHPUnit\Framework\TestCase;
 use Pich\App\Action\ActionInterface;
+use Pich\App\Response\JsonOptions;
 use Pich\App\Response\ResponseInterface;
 use Psr\Container\ContainerInterface;
 
@@ -31,7 +32,7 @@ class DispatcherTest extends TestCase
         $dispatcher->addRoute($route);
         $result = $dispatcher->dispatch();
 
-        $this->assertEquals('test', $result);
+        $this->assertInstanceOf(ResponseInterface::class, $result);
     }
 
     public function testParameters()
@@ -49,7 +50,7 @@ class DispatcherTest extends TestCase
         $dispatcher->addRoute($route);
         $result = $dispatcher->dispatch();
 
-        $this->assertEquals('test', $result);
+        $this->assertInstanceOf(ResponseInterface::class, $result);
     }
 
     public function testNotFound()
@@ -66,5 +67,13 @@ class DispatcherTest extends TestCase
         $dispatcher = new Dispatcher();
         $dispatcher->addRoute($route);
         $dispatcher->dispatch();
+    }
+
+    public function testOptions()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'OPTIONS';
+        $dispatcher = new Dispatcher();
+        $result = $dispatcher->dispatch();
+        $this->assertInstanceOf(JsonOptions::class, $result);
     }
 }

@@ -4,7 +4,10 @@ namespace Pich\App\Router;
 
 use Exception;
 use FastRoute\RouteCollector;
+use http\Env\Response;
 use Pich\App\Action\ActionInterface;
+use Pich\App\Response\JsonOptions;
+use Pich\App\Response\ResponseInterface;
 use Psr\Container\ContainerInterface;
 use function FastRoute\simpleDispatcher;
 
@@ -21,29 +24,32 @@ class Dispatcher
     }
 
     /**
-     * @return string
      * @throws Exception
      */
-    public function dispatch(): string
+    public function dispatch(): ResponseInterface
     {
-        $routes = $this->routes;
-        $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($routes) {
-            foreach ($routes as $route) {
-                $r->addRoute($route->getMethod(), $route->getPath(), $route->getController());
+        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+            return new JsonOptions();
+        } else {
+            $routes = $this->routes;
+            $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($routes) {
+                foreach ($routes as $route) {
+                    $r->addRoute($route->getMethod(), $route->getPath(), $route->getController());
+                }
+            });
+            $route = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+            switch ($route[0]) {
+                case \FastRoute\Dispatcher::FOUND:
+                    /** @var ActionInterface $action */
+                    $action = $route[1];
+                    $parameters = (array)$route[2];
+                    $response = $action->execute($parameters);
+                    return $response;
+                    break;
+                default:
+                    throw new Exception('Not Found');
+                    break;
             }
-        });
-        $route = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
-        switch ($route[0]) {
-            case \FastRoute\Dispatcher::FOUND:
-                /** @var ActionInterface $action */
-                $action = $route[1];
-                $parameters = (array)$route[2];
-                $response = $action->execute($parameters);
-                return $response->render();
-                break;
-            default:
-                throw new Exception('Not Found');
-                break;
         }
     }
 }
