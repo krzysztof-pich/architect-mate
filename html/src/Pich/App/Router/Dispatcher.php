@@ -41,8 +41,7 @@ class Dispatcher
                     /** @var ActionInterface $action */
                     $action = $route[1];
                     $parameters = (array)$route[2];
-                    $response = $action->execute($parameters);
-                    return $response;
+                    return $action->execute($parameters);
                     break;
                 default:
                     throw new Exception('Not Found');

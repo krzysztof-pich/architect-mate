@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Table from './view/table/table';
+import Table from '../lib/view/table/table';
 
 class RepositoriesTable extends Component {
     columns = [

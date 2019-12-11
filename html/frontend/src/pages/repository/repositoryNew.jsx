@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Toolbar from "../../components/view/toolbar";
+import Toolbar from "../../lib/view/toolbar";
 import RepositoryForm from "../../components/repositoryForm";
 
 class RepositoryNew extends Component {

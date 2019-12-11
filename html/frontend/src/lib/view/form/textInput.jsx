@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-class TextareaInput extends Component {
+class TextInput extends Component {
     render() {
-        const {value, onChange, name, label, rows, error} = this.props;
+        const {name, label, error, type, ...rest} = this.props;
 
         let inputClass = 'form-control';
         if (error) {
@@ -13,27 +13,26 @@ class TextareaInput extends Component {
         return (
             <div className="form-group">
                 <label htmlFor={name}>{label}</label>
-                <textarea
-                    defaultValue={value}
-                    onChange={onChange}
-                    className={inputClass}
+                <input
+                    type={type ? type : 'text'}
                     id={name}
                     name={name}
-                    rows={rows ? rows : 3}
-                >
+                    className={inputClass}
+                    {...rest}
 
-                </textarea>
+                />
                 {error && <div className="invalid-feedback">{error}</div>}
             </div>
         );
     }
 }
 
-TextareaInput.propTypes = {
+TextInput.propTypes = {
+    value: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-    rows: PropTypes.number,
+    placeholder: PropTypes.string,
     errors: PropTypes.array
 };
 
-export default TextareaInput;
+export default TextInput;

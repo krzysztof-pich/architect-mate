@@ -1,7 +1,7 @@
 import React, {Component} from "react"
 import _ from 'lodash';
 import RepositoriesTable from "../../components/repositoriesTable";
-import Toolbar from "../../components/view/toolbar";
+import Toolbar from "../../lib/view/toolbar";
 import axios from "axios";
 
 class RepositoryList extends Component {

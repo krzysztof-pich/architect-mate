@@ -20,13 +20,18 @@ class Form extends Component {
         return errors ? errors : null;
     };
 
-    validateProperty = ({name, value}) => {
+    validateProperty = (name, data) => {
+        const {error} = this.schema.validate(data, {abortEarly: false});
 
-        const obj = {[name]: value};
+        if (!error) return null;
 
-        const schema = {[name]: this.schema[name]};
-        const {error} = Joi.validate(obj, schema);
-        return error ? error.details[0].message : null;
+        for (let item of error.details) {
+            if (item.path[0] === name) {
+                return item.message;
+            }
+        }
+
+        return null;
     };
 
     handleSubmit = e => {
@@ -38,16 +43,18 @@ class Form extends Component {
     };
 
     handleChange = ({currentTarget: input}) => {
+        const data = {...this.state.data};
+        data[input.name] = input.value;
+
         const errors = { ...this.state.errors };
-        const errorMessage = this.validateProperty(input);
+        const errorMessage = this.validateProperty(input.name, data);
         if (errorMessage) {
             errors[input.name] = errorMessage;
         } else {
             delete errors[input.name];
         }
 
-        const data = {...this.state.data};
-        data[input.name] = input.value;
+
         this.setState({data, errors});
     };
 

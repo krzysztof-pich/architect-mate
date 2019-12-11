@@ -1,18 +1,18 @@
 import React from 'react';
 import Joi from "joi-browser";
-import TextInput from "./view/form/textInput";
-import TextareaInput from "./view/form/textareaInput";
-import SelectInput from "./view/form/selectInput";
-import Form from "./view/form/form";
+import TextInput from "../lib/view/form/textInput";
+import TextareaInput from "../lib/view/form/textareaInput";
+import SelectInput from "../lib/view/form/selectInput";
+import Form from "../lib/view/form/form";
 import axios from "axios";
 
 class RepositoryForm extends Form {
-    schema = {
+    schema = Joi.object({
         name: Joi.string().required().label('Name'),
         description: Joi.string().allow('').label('Description'),
         path: Joi.string().required().label('Path'),
         type: Joi.string().required().label('Type')
-    };
+    });
     state = {
         data: {
             name: '',
@@ -24,9 +24,7 @@ class RepositoryForm extends Form {
     };
 
     doSubmit = async () => {
-        console.log(this.state.data);
-        const { data: repository } = await axios.post('http://localhost/vcs/repository', {name: 'test'});
-        console.log(repository);
+        const { data } = await axios.post('http://localhost/vcs/repository', {name: 'test'});
     };
 
     render() {
