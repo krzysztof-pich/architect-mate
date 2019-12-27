@@ -1,7 +1,7 @@
 version: "3"
 services:
   php:
-    build: '../docker/php73'
+    build: '../docker/php74'
     container_name: php
     networks:
       - backend

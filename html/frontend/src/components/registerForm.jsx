@@ -2,6 +2,7 @@ import React from "react";
 import Form from "../lib/view/form/form";
 import Joi from "joi-browser";
 import TextInput from "../lib/view/form/textInput";
+import http from "../services/http";
 
 class RegisterForm extends Form {
     schema = Joi.object({
@@ -24,6 +25,11 @@ class RegisterForm extends Form {
         },
         errors: {}
     };
+
+    doSubmit = async () => {
+        const { data } = await http.post('user', this.state.data);
+    };
+
     render() {
         const {data, errors} = this.state;
         return (

@@ -2,17 +2,17 @@
 
 namespace Pich\App\Tests;
 
-use Pich\App\Database;
+use Pich\App\Database\ConnectionFactory;
 use PHPUnit\Framework\TestCase;
 use Phake as p;
 
-class DatabaseTest extends TestCase
+class ConnectionFactoryTest extends TestCase
 {
 
     public function testGetConnection()
     {
         $pdo = p::mock(\PDO::class);
-        $database = new Database($pdo);
+        $database = new ConnectionFactory($pdo);
 
         $this->assertInstanceOf(\PDO::class, $database->getConnection());
     }
