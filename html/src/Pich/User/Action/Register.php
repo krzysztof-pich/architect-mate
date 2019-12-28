@@ -8,10 +8,7 @@ use Pich\App\Response\ResponseInterface;
 
 class Register implements ActionInterface
 {
-    /**
-     * @var JsonResponder
-     */
-    private $jsonResponder;
+    private JsonResponder $jsonResponder;
 
     public function __construct(JsonResponder $jsonResponder)
     {
