@@ -6,8 +6,21 @@ use Pich\User\Domain\DTO\User;
 
 class UserCreator
 {
+    private UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function createUser(string $email, string $password): User
     {
-        return new User();
+        $user = new User();
+        $user->setEmail($email);
+        $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
+
+        $this->userRepository->addUser($user);
+
+        return $user;
     }
 }

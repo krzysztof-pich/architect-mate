@@ -48,9 +48,11 @@ class UserRepositoryTest extends TestCase
         p::when($this->connection)->lastInsertId()->thenReturn(1);
 
         $repository = new UserRepository($this->connectionFactory);
-        $repository->addUser($user);
+        $createdUser = $repository->addUser($user);
 
-        $this->assertEquals(1, $user->getId());
+        $this->assertEquals(1, $createdUser->getId());
+        $this->assertEquals($email, $createdUser->getEmail());
+        $this->assertEquals($password, $createdUser->getPassword());
         p::verify($this->connection)->prepare('INSERT INTO users (email, password) VALUES(?,?)');
         P::verify($this->stmt)->execute([$email, $password]);
     }

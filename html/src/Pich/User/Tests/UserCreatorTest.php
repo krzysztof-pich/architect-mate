@@ -3,6 +3,7 @@
 namespace Pich\User\Tests;
 
 use Phake_IMock;
+use Pich\User\Domain\DTO\User;
 use Pich\User\Domain\UserCreator;
 use PHPUnit\Framework\TestCase;
 use Phake as p;
@@ -25,14 +26,12 @@ class UserCreatorTest extends TestCase
     {
         $email = 'test@pich.pl';
         $password = 'qwerty';
-        $userCreator = new UserCreator();
+
+        $userCreator = new UserCreator($this->repository);
         $user = $userCreator->createUser($email, $password);
 
-        //todo finish tests
-        p::when($this->repository)->addUser($user);
-
-        $this->assertEquals(1, $user->getId());
+        p::verify($this->repository)->addUser($user);
         $this->assertEquals($email, $user->getEmail());
-        $this->assertEquals('$2y$10$.AtkkZ.LkmpAg61sMKeuSubbjLX.Ayju7TaTd7TUkuiL9kmiTRVmi', $user->getPassword());
+        $this->assertTrue(password_verify($password, $user->getPassword()));
     }
 }

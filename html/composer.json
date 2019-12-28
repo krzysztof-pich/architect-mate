@@ -19,7 +19,7 @@
     }
   ],
   "require": {
-    "php": "7.4.*",
+    "php": "^7.4",
     "nikic/fast-route": "~0.5.0",
     "php-di/php-di": "^6.0",
     "ext-pdo": "*",
