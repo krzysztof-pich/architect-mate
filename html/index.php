@@ -10,4 +10,5 @@ $response = $webKernel->execute();
 foreach ($response->getHeaders() as $header) {
     header($header);
 }
+http_response_code($response->getStatus());
 echo $response->render();

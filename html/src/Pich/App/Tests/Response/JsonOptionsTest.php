@@ -8,7 +8,7 @@ use Phake as p;
 
 class JsonOptionsTest extends TestCase
 {
-    public function testRender()
+    public function testRender(): void
     {
         $jsonResponse = new JsonOptions();
         $this->assertEquals('[]', $jsonResponse->render());
@@ -21,5 +21,6 @@ class JsonOptionsTest extends TestCase
             ],
             $jsonResponse->getHeaders()
         );
+        $this->assertEquals(200, $jsonResponse->getStatus());
     }
 }

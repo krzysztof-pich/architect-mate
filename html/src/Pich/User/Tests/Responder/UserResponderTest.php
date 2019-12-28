@@ -3,6 +3,7 @@
 namespace Pich\User\Tests\Responder;
 
 use Phake_IMock;
+use Pich\App\PayloadDTO;
 use Pich\App\Response\Json;
 use Pich\User\Domain\DTO\User;
 use Pich\User\Responder\UserResponder;
@@ -22,7 +23,7 @@ class UserResponderTest extends TestCase
         $this->json = p::mock(Json::class);
     }
 
-    public function testSend()
+    public function testSend(): void
     {
         $email = 'test@pich.pl';
         $id = 1;
@@ -32,12 +33,35 @@ class UserResponderTest extends TestCase
             ->setPassword('password_hash')
             ->setEmail($email);
 
+        $payload = new PayloadDTO();
+        $payload->setData(['user' => $user]);
+
         $userResponder = new UserResponder($this->json);
-        $userResponder->send($user);
+        $userResponder->setPayload($payload);
+        $userResponder->send();
 
         p::verify($this->json)->setData(
             [
                 'user' => ['id' => $id, 'email' => $email]
+            ]
+        );
+    }
+
+    public function testError()
+    {
+        $statusMessage = 'database error';
+        $payload = new PayloadDTO();
+        $payload->setStatus(PayloadDTO::INTERNAL_ERROR);
+        $payload->setStatusMessage($statusMessage);
+
+        $userResponder = new UserResponder($this->json);
+        $userResponder->setPayload($payload);
+        $userResponder->send();
+
+        p::verify($this->json)->setStatus(500);
+        p::verify($this->json)->setData(
+            [
+                'error' => $statusMessage
             ]
         );
     }

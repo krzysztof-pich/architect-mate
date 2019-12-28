@@ -14,6 +14,11 @@ class JsonOptions implements ResponseInterface
         ];
     }
 
+    public function getStatus(): int
+    {
+        return 200;
+    }
+
     public function render(): string
     {
         return json_encode([]);

@@ -15,6 +15,11 @@ class UserRepository
         $this->connection = $connection->getConnection();
     }
 
+    /**
+     * @param User $user
+     * @return User
+     * @throws \PDOException
+     */
     public function addUser(User $user): User
     {
         $stmt = $this->connection->prepare('INSERT INTO users (email, password) VALUES(?,?)');
