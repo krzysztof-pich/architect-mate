@@ -9,7 +9,7 @@ return [
 //            $c->get('db.password')
         );
     },
-    'Database' => Di\create(\Pich\App\Database::class)
+    'Database' => Di\create(\Pich\App\Database\ConnectionFactory::class)
         ->constructor(DI\get('PDO')),
     'WebKernel' => Di\create(\Pich\App\WebKernel::class)
         ->constructor(Di\get('Dispatcher'))
