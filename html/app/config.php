@@ -2,7 +2,7 @@
 use function DI\create;
 
 return [
-    'db.host'     => 'localhost',
+    'db.host'     => 'mysql',
     'db.database' => 'architect_mate',
     'db.user'     => 'root',
     'db.password' => 'root',

@@ -6,6 +6,7 @@ use PDO;
 use PDOStatement;
 use Phake_IMock;
 use Pich\App\Database\ConnectionFactory;
+use Pich\App\Database\Exception\DuplicateException;
 use Pich\User\Domain\DTO\User;
 use Pich\User\Domain\UserRepository;
 use PHPUnit\Framework\TestCase;
@@ -46,6 +47,7 @@ class UserRepositoryTest extends TestCase
         $user->setPassword($password);
 
         p::when($this->connection)->lastInsertId()->thenReturn(1);
+        p::when($this->stmt)->execute(p::anyParameters())->thenReturn(true);
 
         $repository = new UserRepository($this->connectionFactory);
         $createdUser = $repository->addUser($user);
