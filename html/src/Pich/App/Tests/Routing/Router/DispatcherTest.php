@@ -1,13 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Pich\App\Router;
+namespace Pich\App\Tests\Routing\Router;
 
 use Phake as p;
 use PHPUnit\Framework\TestCase;
 use Pich\App\Action\ActionInterface;
 use Pich\App\Response\JsonOptions;
 use Pich\App\Response\ResponseInterface;
-use Psr\Container\ContainerInterface;
+use Pich\App\Routing\Router\Dispatcher;
+use Pich\App\Routing\Router\Route;
 
 class DispatcherTest extends TestCase
 {

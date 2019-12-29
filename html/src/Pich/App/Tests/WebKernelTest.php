@@ -5,7 +5,7 @@ namespace Pich\App;
 use PHPUnit\Framework\TestCase;
 use Phake as p;
 use Pich\App\Response\ResponseInterface;
-use Pich\App\Router\Dispatcher;
+use Pich\App\Routing\Router\Dispatcher;
 
 class WebKernelTest extends TestCase
 {

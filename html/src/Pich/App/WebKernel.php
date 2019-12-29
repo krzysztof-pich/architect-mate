@@ -3,14 +3,12 @@
 namespace Pich\App;
 
 use Pich\App\Response\ResponseInterface;
-use Pich\App\Router\Dispatcher;
+use Pich\App\Routing\Router\Dispatcher;
 
 class WebKernel
 {
-    /**
-     * @var Dispatcher
-     */
-    private $dispatcher;
+
+    private Dispatcher $dispatcher;
 
     public function __construct(Dispatcher $dispatcher)
     {

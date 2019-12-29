@@ -1,10 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Pich\App\Router;
+namespace Pich\App\Tests\Routing\Router;
 
 use PHPUnit\Framework\TestCase;
 use Phake as p;
 use Pich\App\Action\ActionInterface;
+use Pich\App\Routing\Router\Route;
 
 class RouteTest extends TestCase
 {
