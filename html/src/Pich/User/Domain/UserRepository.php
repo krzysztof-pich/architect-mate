@@ -3,6 +3,7 @@
 namespace Pich\User\Domain;
 
 use PDO;
+use PDOException;
 use Pich\App\Database\ConnectionFactory;
 use Pich\User\Domain\DTO\User;
 
@@ -18,15 +19,32 @@ class UserRepository
     /**
      * @param User $user
      * @return User
-     * @throws \PDOException
+     * @throws PDOException
      */
     public function addUser(User $user): User
     {
         $stmt = $this->connection->prepare('INSERT INTO users (email, password) VALUES(?,?)');
         $stmt->execute([$user->getEmail(), $user->getPassword()]);
-
         $user->setId((int)$this->connection->lastInsertId());
 
+        return $user;
+    }
+
+    /**
+     * @param string $email
+     * @return User
+     * @throws PDOException
+     */
+    public function findUserByEmail(string $email): User
+    {
+        $stmt = $this->connection->prepare('SELECT * FROM users WHERE email=? LIMIT 1');
+        $stmt->execute($email);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = new User();
+        $user
+            ->setId((int)$result['id'])
+            ->setEmail($result['email'])
+            ->setPassword($result['password']);
         return $user;
     }
 }

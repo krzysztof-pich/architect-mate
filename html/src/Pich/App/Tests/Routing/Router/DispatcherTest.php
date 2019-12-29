@@ -7,6 +7,7 @@ use Phake as p;
 use Phake_IMock;
 use PHPUnit\Framework\TestCase;
 use Pich\App\Action\ActionInterface;
+use Pich\App\Response\JsonNotFound;
 use Pich\App\Response\JsonOptions;
 use Pich\App\Response\ResponseInterface;
 use Pich\App\Routing\Request;
@@ -68,9 +69,6 @@ class DispatcherTest extends TestCase
 
     public function testNotFound(): void
     {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Not Found');
-
         $action = p::mock(ActionInterface::class);
         $route = new Route('GET', '/', $action);
 
@@ -79,7 +77,8 @@ class DispatcherTest extends TestCase
 
         $dispatcher = new Dispatcher($this->request);
         $dispatcher->addRoute($route);
-        $dispatcher->dispatch();
+        $result = $dispatcher->dispatch();
+        $this->assertInstanceOf(JsonNotFound::class, $result);
     }
 
     public function testOptions(): void
