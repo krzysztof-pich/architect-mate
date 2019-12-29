@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Pich\App\Router;
+namespace Pich\App\Routing\Router;
 
 use Pich\App\Action\ActionInterface;
 

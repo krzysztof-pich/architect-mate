@@ -5,20 +5,18 @@ namespace Pich\Vcs\Action;
 use Pich\App\Action\ActionInterface;
 use Pich\App\JsonResponder;
 use Pich\App\Response\ResponseInterface;
+use Pich\App\Routing\RequestInterface;
 
 class Grid implements ActionInterface
 {
-    /**
-     * @var JsonResponder
-     */
-    private $jsonResponder;
+    private JsonResponder $jsonResponder;
 
     public function __construct(JsonResponder $jsonResponder)
     {
         $this->jsonResponder = $jsonResponder;
     }
 
-    public function execute(array $request): ResponseInterface
+    public function execute(RequestInterface $request): ResponseInterface
     {
         return $this->jsonResponder->send(
             [

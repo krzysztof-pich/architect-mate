@@ -5,6 +5,7 @@ namespace Pich\Vcs\Action;
 use Pich\App\Action\ActionInterface;
 use Pich\App\JsonResponder;
 use Pich\App\Response\ResponseInterface;
+use Pich\App\Routing\RequestInterface;
 
 class Add implements ActionInterface
 {
@@ -18,7 +19,7 @@ class Add implements ActionInterface
         $this->responder = $responder;
     }
 
-    public function execute(array $request): ResponseInterface
+    public function execute(RequestInterface $request): ResponseInterface
     {
         return $this->responder->send(
             [

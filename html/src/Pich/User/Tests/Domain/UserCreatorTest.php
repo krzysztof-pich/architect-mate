@@ -39,6 +39,16 @@ class UserCreatorTest extends TestCase
         $this->assertEmpty($payload->getStatusMessage());
     }
 
+    public function testOnDuplicate(): void
+    {
+        p::when($this->repository)->addUser(p::anyParameters())->thenThrow(new \PDOException('', '23000'));
+        $userCreator = new UserCreator($this->repository);
+        $payload = $userCreator->createUser('test@pich.pl', 'password_hash');
+
+        $this->assertEquals(PayloadDTO::DUPLICATED_ENTRY, $payload->getStatus());
+        $this->assertEquals('Email test@pich.pl already exists', $payload->getStatusMessage());
+    }
+
     public function testRepositoryException(): void
     {
         p::when($this->repository)->addUser(p::anyParameters())->thenThrow(new \PDOException());

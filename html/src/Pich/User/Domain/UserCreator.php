@@ -25,8 +25,13 @@ class UserCreator
             $this->userRepository->addUser($user);
             $payload->setData(['user' => $user]);
         } catch (\PDOException $exception) {
-            $payload->setStatus(PayloadDTO::INTERNAL_ERROR);
-            $payload->setStatusMessage('User can\'t be registered');
+            if ((int)$exception->getCode() === 23000) {
+                $payload->setStatus(PayloadDTO::DUPLICATED_ENTRY);
+                $payload->setStatusMessage("Email {$email} already exists");
+            } else {
+                $payload->setStatus(PayloadDTO::INTERNAL_ERROR);
+                $payload->setStatusMessage('User can\'t be registered');
+            }
         }
 
         return $payload;

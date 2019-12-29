@@ -45,6 +45,14 @@ class UserResponder
                 ]
             );
             return $this->json;
+        } elseif ($this->payload->getStatus() === PayloadDTO::DUPLICATED_ENTRY) {
+            $this->json->setStatus(409);
+            $this->json->setData(
+                [
+                    'error' => $this->payload->getStatusMessage() ?: 'Duplicated entry'
+                ]
+            );
+            return $this->json;
         }
 
         $this->renderPayloadData();

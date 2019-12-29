@@ -5,6 +5,7 @@ namespace Pich\User\Action;
 use Pich\App\Action\ActionInterface;
 use Pich\App\JsonResponder;
 use Pich\App\Response\ResponseInterface;
+use Pich\App\Routing\RequestInterface;
 use Pich\User\Domain\UserCreator;
 use Pich\User\Responder\UserResponder;
 
@@ -19,9 +20,9 @@ class Register implements ActionInterface
         $this->userResponder = $userResponder;
     }
 
-    public function execute(array $request): ResponseInterface
+    public function execute(RequestInterface $request): ResponseInterface
     {
-        $payload = $this->userCreator->createUser($request['email'], $request['password']);
+        $payload = $this->userCreator->createUser($request->getParam('email'), $request->getParam('password'));
         $this->userResponder->setPayload($payload);
         return $this->userResponder->send();
     }

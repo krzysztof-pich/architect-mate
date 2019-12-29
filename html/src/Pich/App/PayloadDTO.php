@@ -6,6 +6,7 @@ class PayloadDTO
 {
     public const NOT_FOUND = 'not-found';
     public const INTERNAL_ERROR = 'internal-error';
+    public const DUPLICATED_ENTRY = 'duplicated-entry';
 
     private string $status = '';
     private string $statusMessage = '';

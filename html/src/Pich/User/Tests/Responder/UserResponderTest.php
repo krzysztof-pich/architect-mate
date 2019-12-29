@@ -65,4 +65,23 @@ class UserResponderTest extends TestCase
             ]
         );
     }
+
+    public function testDuplicatedError()
+    {
+        $statusMessage = 'Duplicated error';
+        $payload = new PayloadDTO();
+        $payload->setStatus(PayloadDTO::DUPLICATED_ENTRY);
+        $payload->setStatusMessage($statusMessage);
+
+        $userResponder = new UserResponder($this->json);
+        $userResponder->setPayload($payload);
+        $userResponder->send();
+
+        p::verify($this->json)->setStatus(409);
+        p::verify($this->json)->setData(
+            [
+                'error' => $statusMessage
+            ]
+        );
+    }
 }
