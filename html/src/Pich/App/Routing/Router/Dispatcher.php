@@ -7,6 +7,7 @@ use FastRoute\RouteCollector;
 use Pich\App\Action\ActionInterface;
 use Pich\App\Response\JsonOptions;
 use Pich\App\Response\ResponseInterface;
+use Pich\App\Routing\Request;
 use function FastRoute\simpleDispatcher;
 
 class Dispatcher
@@ -15,6 +16,12 @@ class Dispatcher
      * @var RouteInterface[]
      */
     private array $routes = [];
+    private Request $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
 
     public function addRoute(RouteInterface $route): void
     {
@@ -41,8 +48,8 @@ class Dispatcher
             case \FastRoute\Dispatcher::FOUND:
                 /** @var ActionInterface $action */
                 $action = $route[1];
-                $parameters = (array)$route[2];
-                return $action->execute($parameters);
+                $this->request->setRouteParams((array)$route[2]);
+                return $action->execute($this->request);
                 break;
             default:
                 throw new Exception('Not Found');

@@ -1,6 +1,7 @@
 <?php
 return [
     'Dispatcher'  => Di\create(\Pich\App\Routing\Router\Dispatcher::class)
+        ->constructor(Di\create(\Pich\App\Routing\Request::class))
         ->method(
             'addRoute',
             Di\create(\Pich\App\Routing\Router\Route::class)

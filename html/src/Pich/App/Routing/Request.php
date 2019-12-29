@@ -10,11 +10,6 @@ class Request implements RequestInterface
 
     private array $merged;
 
-    public function __construct()
-    {
-
-    }
-
     public function setRouteParams(array $params): void
     {
         $this->routeParams = $params;
