@@ -45,7 +45,9 @@ class UserResponder
                 ]
             );
             return $this->json;
-        } elseif ($this->payload->getStatus() === PayloadDTO::DUPLICATED_ENTRY) {
+        }
+
+        if ($this->payload->getStatus() === PayloadDTO::DUPLICATED_ENTRY) {
             $this->json->setStatus(409);
             $this->json->setData(
                 [

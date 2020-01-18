@@ -6,4 +6,5 @@ return [
     'db.database' => 'architect_mate',
     'db.user'     => 'root',
     'db.password' => 'root',
+    'jwt'
 ];
