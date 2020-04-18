@@ -51,10 +51,8 @@ class Dispatcher
                 $action = $route[1];
                 $this->request->setRouteParams((array)$route[2]);
                 return $action->execute($this->request);
-                break;
             default:
                 return new JsonNotFound();
-                break;
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Pich\App\Tests;
 
+use Phake_IMock;
 use Pich\App\JsonResponder;
 use PHPUnit\Framework\TestCase;
 use Phake as p;
@@ -11,7 +12,7 @@ class JsonResponderTest extends TestCase
 {
     public function testJsonResponder()
     {
-        /** @var Json $response */
+        /** @var Json|Phake_IMock $response */
         $response = p::mock(Json::class);
         $responder = new JsonResponder($response);
         $responder->send(['test' => 1]);
