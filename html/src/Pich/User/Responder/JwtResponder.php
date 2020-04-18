@@ -8,6 +8,6 @@ class JwtResponder extends AbstractResponder
 {
     protected function renderPayloadData(): void
     {
-
+        $this->json->setData(['jwt' => $this->payload->getData()['jwt']]);
     }
 }
