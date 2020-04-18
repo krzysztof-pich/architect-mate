@@ -21,8 +21,10 @@ class Login implements ActionInterface
 
     public function execute(RequestInterface $request): ResponseInterface
     {
-        print_r($this->userRepository->findUserByEmail('facesbook@pich.pl'));
 
-        echo 'jest';exit;
+
+//        print_r($this->userRepository->findUserByEmail('facesbook@pich.pl'));
+
+//        exit;
     }
 }

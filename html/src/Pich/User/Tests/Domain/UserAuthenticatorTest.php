@@ -4,6 +4,7 @@ namespace Pich\User\Tests\Domain;
 
 use Phake_IMock;
 use Pich\App\PasswordHash;
+use Pich\App\PayloadDTO;
 use Pich\User\Domain\DTO\User;
 use Pich\User\Domain\Jwt;
 use Pich\User\Domain\UserAuthenticator;
@@ -53,6 +54,21 @@ class UserAuthenticatorTest extends TestCase
         $this->assertEmpty($payload->getStatusMessage(), 'Status should be empty');
         $this->assertEmpty($payload->getStatus(), 'Status message should be empty');
         p::verify($this->jwt)->encodeUser($user);
+    }
+
+    public function testUserNotFound(): void
+    {
+        $email = 'test@pich.pl';
+        $password = 'qwerty';
+
+        p::when($this->userRepository)->findUserByEmail($email)->thenReturn(null);
+        $authenticator = new UserAuthenticator($this->userRepository, $this->passwordHash, $this->jwt);
+        $payload = $authenticator->authorize($email, $password);
+
+        $this->assertEmpty($payload->getData(), 'Data should be empty on error');
+        $this->assertEquals('User can\'t be found', $payload->getStatusMessage(), 'User should be notified that there is no account');
+        $this->assertEquals(PayloadDTO::NOT_FOUND, $payload->getStatus(), 'Correct status should be set');
+        p::verifyNoInteraction($this->jwt);
     }
 
     private function createUser(string $email, string $passwordHash): User

@@ -22,6 +22,11 @@ class UserAuthenticator
     {
         $payload = new PayloadDTO();
         $user = $this->userRepository->findUserByEmail($email);
+        if (!$user) {
+            $payload->setStatusMessage('User can\'t be found');
+            $payload->setStatus(PayloadDTO::NOT_FOUND);
+            return $payload;
+        }
         if ($this->passwordHash->verifyPassword($password, $user->getPassword())) {
             $payload->setData(['jwt' => $this->jwt->encodeUser($user)]);
         }
