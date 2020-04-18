@@ -5,6 +5,7 @@ namespace Pich\App\Routing\Router;
 use Exception;
 use FastRoute\RouteCollector;
 use Pich\App\Action\ActionInterface;
+use Pich\App\Response\JsonNotFound;
 use Pich\App\Response\JsonOptions;
 use Pich\App\Response\ResponseInterface;
 use Pich\App\Routing\Request;
@@ -50,10 +51,8 @@ class Dispatcher
                 $action = $route[1];
                 $this->request->setRouteParams((array)$route[2]);
                 return $action->execute($this->request);
-                break;
             default:
-                throw new Exception('Not Found');
-                break;
+                return new JsonNotFound();
         }
     }
 }

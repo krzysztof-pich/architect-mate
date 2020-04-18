@@ -6,7 +6,6 @@ use PDO;
 use PDOStatement;
 use Phake_IMock;
 use Pich\App\Database\ConnectionFactory;
-use Pich\App\Database\Exception\DuplicateException;
 use Pich\User\Domain\DTO\User;
 use Pich\User\Domain\UserRepository;
 use PHPUnit\Framework\TestCase;
@@ -29,11 +28,11 @@ class UserRepositoryTest extends TestCase
 
     public function setUp(): void
     {
-       $this->connectionFactory = p::mock(ConnectionFactory::class);
-       $this->connection = p::mock(PDO::class);
-       $this->stmt = p::mock(PDOStatement::class);
-       p::when($this->connectionFactory)->getConnection()->thenReturn($this->connection);
-       p::when($this->connection)->prepare(p::anyParameters())->thenReturn($this->stmt);
+        $this->connectionFactory = p::mock(ConnectionFactory::class);
+        $this->connection = p::mock(PDO::class);
+        $this->stmt = p::mock(PDOStatement::class);
+        p::when($this->connectionFactory)->getConnection()->thenReturn($this->connection);
+        p::when($this->connection)->prepare(p::anyParameters())->thenReturn($this->stmt);
 
     }
 
@@ -57,5 +56,32 @@ class UserRepositoryTest extends TestCase
         $this->assertEquals($password, $createdUser->getPassword());
         p::verify($this->connection)->prepare('INSERT INTO users (email, password) VALUES(?,?)');
         P::verify($this->stmt)->execute([$email, $password]);
+    }
+
+    public function testFindUserByEmail(): void
+    {
+        p::when($this->stmt)->execute(p::anyParameters())->thenReturn(true);
+        p::when($this->stmt)->fetch(PDO::FETCH_ASSOC)->thenReturn(
+            [
+                'id' => 1,
+                'email' => 'test@pich.pl',
+                'password' => 'password_hash',
+            ]
+        );
+
+        $repository = new UserRepository($this->connectionFactory);
+        $user = $repository->findUserByEmail('test@pich.pl');
+        $this->assertEquals(1, $user->getId());
+        $this->assertEquals('test@pich.pl', $user->getEmail());
+        $this->assertEquals('password_hash', $user->getPassword());
+    }
+
+    public function testUserNotExits(): void
+    {
+        p::when($this->stmt)->execute(p::anyParameters())->thenReturn(true);
+        p::when($this->stmt)->fetch(PDO::FETCH_ASSOC)->thenReturn(false);
+
+        $repository = new UserRepository($this->connectionFactory);
+        $this->assertNull($repository->findUserByEmail('no-found@pich.pl'));
     }
 }

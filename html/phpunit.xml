@@ -12,6 +12,7 @@
             <exclude>
                 <directory suffix=".php">src/*/*/Config</directory>
                 <directory suffix=".php">src/*/*/Tests</directory>
+                <directory suffix=".php">src/Pich/App/TestsUtils</directory>
             </exclude>
         </whitelist>
     </filter>

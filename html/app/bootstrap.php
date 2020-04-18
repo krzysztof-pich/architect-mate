@@ -8,4 +8,5 @@ $containerBuilder = new ContainerBuilder;
 $containerBuilder->addDefinitions(__DIR__ . '/config.php');
 $containerBuilder->addDefinitions(__DIR__ . '/routing.php');
 $containerBuilder->addDefinitions(__DIR__ . '/../src/Pich/App/Config/config.php');
+$containerBuilder->addDefinitions(__DIR__ . '/../src/Pich/User/Config/config.php');
 return $containerBuilder->build();

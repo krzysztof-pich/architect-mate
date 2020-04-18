@@ -20,14 +20,16 @@
   ],
   "require": {
     "php": "^7.4",
-    "nikic/fast-route": "~0.5.0",
-    "php-di/php-di": "^6.0",
+    "ext-json": "*",
     "ext-pdo": "*",
-    "ext-json": "*"
+    "firebase/php-jwt": "^5.0",
+    "nikic/fast-route": "~0.5.0",
+    "php-di/php-di": "^6.0"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master",
+    "phake/phake": "@stable",
+    "phpstan/phpstan": "^0.12.18",
     "phpunit/phpunit": "8.*",
-    "phake/phake": "@stable"
+    "roave/security-advisories": "dev-master"
   }
 }

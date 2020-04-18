@@ -4,6 +4,7 @@ import "../login.css"
 import Form from "../lib/view/form/form";
 import TextInput from "../lib/view/form/textInput";
 import Joi from "joi-browser";
+import http from "../lib/http";
 
 class LoginForm extends Form {
     schema = Joi.object({
@@ -19,9 +20,8 @@ class LoginForm extends Form {
         errors: {}
     };
 
-    handleSubmit = e => {
-        //todo finish login
-        e.preventDefault();
+    doSubmit = async e => {
+        const {data} = await http.post('login', this.state.data);
     };
 
     render() {

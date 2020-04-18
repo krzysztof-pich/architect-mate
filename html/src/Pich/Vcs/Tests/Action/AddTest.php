@@ -1,6 +1,6 @@
 <?php
 
-namespace Pich\Repository\Tests\Action;
+namespace Pich\Vcs\Tests\Action;
 
 use Pich\App\JsonResponder;
 use Pich\App\Response\ResponseInterface;

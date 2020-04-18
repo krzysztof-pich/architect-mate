@@ -3,7 +3,6 @@
 namespace Pich\User\Action;
 
 use Pich\App\Action\ActionInterface;
-use Pich\App\JsonResponder;
 use Pich\App\Response\ResponseInterface;
 use Pich\App\Routing\RequestInterface;
 use Pich\User\Domain\UserCreator;

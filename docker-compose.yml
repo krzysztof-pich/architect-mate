@@ -28,7 +28,7 @@ services:
     networks:
       - backend
     ports:
-      - "3306:3306"
+      - "3307:3307"
     volumes:
       - /docker/db:/var/lib/mysql
     environment:

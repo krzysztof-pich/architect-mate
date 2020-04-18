@@ -46,42 +46,4 @@ class UserResponderTest extends TestCase
             ]
         );
     }
-
-    public function testError()
-    {
-        $statusMessage = 'database error';
-        $payload = new PayloadDTO();
-        $payload->setStatus(PayloadDTO::INTERNAL_ERROR);
-        $payload->setStatusMessage($statusMessage);
-
-        $userResponder = new UserResponder($this->json);
-        $userResponder->setPayload($payload);
-        $userResponder->send();
-
-        p::verify($this->json)->setStatus(500);
-        p::verify($this->json)->setData(
-            [
-                'error' => $statusMessage
-            ]
-        );
-    }
-
-    public function testDuplicatedError()
-    {
-        $statusMessage = 'Duplicated error';
-        $payload = new PayloadDTO();
-        $payload->setStatus(PayloadDTO::DUPLICATED_ENTRY);
-        $payload->setStatusMessage($statusMessage);
-
-        $userResponder = new UserResponder($this->json);
-        $userResponder->setPayload($payload);
-        $userResponder->send();
-
-        p::verify($this->json)->setStatus(409);
-        p::verify($this->json)->setData(
-            [
-                'error' => $statusMessage
-            ]
-        );
-    }
 }

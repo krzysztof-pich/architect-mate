@@ -16,6 +16,11 @@ return [
             'addRoute',
             Di\create(\Pich\App\Routing\Router\Route::class)
                 ->constructor('GET', '/vcs/repository', Di\get(\Pich\Vcs\Action\Grid::class))
+        )
+        ->method(
+            'addRoute',
+            Di\create(\Pich\App\Routing\Router\Route::class)
+                ->constructor('POST', '/user/login', Di\get(\Pich\User\Action\Login::class))
         ),
 ];
 
