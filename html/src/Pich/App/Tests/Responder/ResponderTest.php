@@ -29,6 +29,7 @@ class ResponderTest extends TestCase
         $payload->setStatus(PayloadDTO::INTERNAL_ERROR);
         $payload->setStatusMessage($statusMessage);
 
+        /** @var AbstractResponder $responder */
         $responder = p::partialMock(AbstractResponder::class, $this->json);
         $responder->setPayload($payload);
         $responder->send();
@@ -48,6 +49,7 @@ class ResponderTest extends TestCase
         $payload->setStatus(PayloadDTO::DUPLICATED_ENTRY);
         $payload->setStatusMessage($statusMessage);
 
+        /** @var AbstractResponder $responder */
         $responder = p::partialMock(AbstractResponder::class, $this->json);
         $responder->setPayload($payload);
         $responder->send();
