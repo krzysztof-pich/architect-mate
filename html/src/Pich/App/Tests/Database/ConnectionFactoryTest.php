@@ -1,6 +1,6 @@
 <?php
 
-namespace Pich\App\Tests;
+namespace Pich\App\Tests\Database;
 
 use Pich\App\Database\ConnectionFactory;
 use PHPUnit\Framework\TestCase;

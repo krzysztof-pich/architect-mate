@@ -1,11 +1,12 @@
 <?php
 
-namespace Pich\App;
+namespace Pich\App\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Phake as p;
 use Pich\App\Response\ResponseInterface;
 use Pich\App\Routing\Router\Dispatcher;
+use Pich\App\WebKernel;
 
 class WebKernelTest extends TestCase
 {
