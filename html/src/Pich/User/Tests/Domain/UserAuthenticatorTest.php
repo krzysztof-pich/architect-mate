@@ -66,7 +66,26 @@ class UserAuthenticatorTest extends TestCase
         $payload = $authenticator->authorize($email, $password);
 
         $this->assertEmpty($payload->getData(), 'Data should be empty on error');
-        $this->assertEquals('User can\'t be found', $payload->getStatusMessage(), 'User should be notified that there is no account');
+        $this->assertEquals('User or password not valid', $payload->getStatusMessage(), 'User should be notified that there is no account');
+        $this->assertEquals(PayloadDTO::NOT_FOUND, $payload->getStatus(), 'Correct status should be set');
+        p::verifyNoInteraction($this->jwt);
+    }
+
+    public function testUserPasswordNotValid(): void
+    {
+        $email = 'test@pich.pl';
+        $password = 'qwerty';
+        $passwordHash = 'password_hash';
+        $user = $this->createUser($email, $passwordHash);
+
+        p::when($this->userRepository)->findUserByEmail($email)->thenReturn($user);
+        p::when($this->passwordHash)->verifyPassword($password, $passwordHash)->thenReturn(false);
+
+        $authenticator = new UserAuthenticator($this->userRepository, $this->passwordHash, $this->jwt);
+        $payload = $authenticator->authorize($email, $password);
+
+        $this->assertEmpty($payload->getData(), 'Data should be empty on error');
+        $this->assertEquals('User or password not valid', $payload->getStatusMessage(), 'User should be notified when password is incorrect');
         $this->assertEquals(PayloadDTO::NOT_FOUND, $payload->getStatus(), 'Correct status should be set');
         p::verifyNoInteraction($this->jwt);
     }

@@ -22,15 +22,13 @@ class UserAuthenticator
     {
         $payload = new PayloadDTO();
         $user = $this->userRepository->findUserByEmail($email);
-        if (!$user) {
-            $payload->setStatusMessage('User can\'t be found');
+        if (!$user || !$this->passwordHash->verifyPassword($password, $user->getPassword())) {
+            $payload->setStatusMessage('User or password not valid');
             $payload->setStatus(PayloadDTO::NOT_FOUND);
             return $payload;
         }
-        if ($this->passwordHash->verifyPassword($password, $user->getPassword())) {
-            $payload->setData(['jwt' => $this->jwt->encodeUser($user)]);
-        }
 
+        $payload->setData(['jwt' => $this->jwt->encodeUser($user)]);
         return $payload;
     }
 }
