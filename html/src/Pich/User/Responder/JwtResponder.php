@@ -6,9 +6,8 @@ use Pich\App\Responder\AbstractResponder;
 
 class JwtResponder extends AbstractResponder
 {
-
     protected function renderPayloadData(): void
     {
-        // TODO: Implement renderPayloadData() method.
+
     }
 }

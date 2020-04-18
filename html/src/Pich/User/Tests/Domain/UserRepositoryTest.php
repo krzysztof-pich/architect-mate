@@ -6,7 +6,6 @@ use PDO;
 use PDOStatement;
 use Phake_IMock;
 use Pich\App\Database\ConnectionFactory;
-use Pich\App\Database\Exception\DuplicateException;
 use Pich\User\Domain\DTO\User;
 use Pich\User\Domain\UserRepository;
 use PHPUnit\Framework\TestCase;
@@ -75,5 +74,14 @@ class UserRepositoryTest extends TestCase
         $this->assertEquals(1, $user->getId());
         $this->assertEquals('test@pich.pl', $user->getEmail());
         $this->assertEquals('password_hash', $user->getPassword());
+    }
+
+    public function testUserNotExits(): void
+    {
+        p::when($this->stmt)->execute(p::anyParameters())->thenReturn(true);
+        p::when($this->stmt)->fetch(PDO::FETCH_ASSOC)->thenReturn(false);
+
+        $repository = new UserRepository($this->connectionFactory);
+        $this->assertNull($repository->findUserByEmail('no-found@pich.pl'));
     }
 }

@@ -1,0 +1,65 @@
+<?php
+
+namespace Pich\User\Tests\Domain;
+
+use Phake_IMock;
+use Pich\App\PasswordHash;
+use Pich\User\Domain\DTO\User;
+use Pich\User\Domain\Jwt;
+use Pich\User\Domain\UserAuthenticator;
+use PHPUnit\Framework\TestCase;
+use Phake as p;
+use Pich\User\Domain\UserRepository;
+
+class UserAuthenticatorTest extends TestCase
+{
+    /**
+     * @var UserRepository|Phake_IMock
+     */
+    private $userRepository;
+    /**
+     * @var PasswordHash|Phake_IMock
+     */
+    private $passwordHash;
+    /**
+     * @var Jwt|Phake_IMock
+     */
+    private $jwt;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->userRepository = p::mock(UserRepository::class);
+        $this->passwordHash = p::mock(PasswordHash::class);
+        $this->jwt = p::mock(Jwt::class);
+    }
+
+    public function testUserAuthenticate(): void
+    {
+        $token = 'jwt_token_encrypted';
+        $email = 'test@pich.pl';
+        $password = 'qwerty';
+        $passwordHash = 'password_hash';
+        $user = $this->createUser($email, $passwordHash);
+
+        p::when($this->userRepository)->findUserByEmail($email)->thenReturn($user);
+        p::when($this->passwordHash)->verifyPassword($password, $passwordHash)->thenReturn(true);
+        p::when($this->jwt)->encodeUser($user)->thenReturn($token);
+
+        $authenticator = new UserAuthenticator($this->userRepository, $this->passwordHash, $this->jwt);
+        $payload = $authenticator->authorize($email, $password);
+
+        $this->assertEquals($token, $payload->getData()['jwt'], 'JWT token not created');
+        $this->assertEmpty($payload->getStatusMessage(), 'Status should be empty');
+        $this->assertEmpty($payload->getStatus(), 'Status message should be empty');
+        p::verify($this->jwt)->encodeUser($user);
+    }
+
+    private function createUser(string $email, string $passwordHash): User
+    {
+        $user = new User();
+        $user->setEmail($email);
+        $user->setPassword($passwordHash);
+        return $user;
+    }
+}

@@ -4,7 +4,7 @@ namespace Pich\User\Tests\Domain;
 
 use PHPUnit\Framework\TestCase;
 use Pich\User\Domain\DTO\User;
-use Pich\User\Domain\JWT;
+use Pich\User\Domain\Jwt;
 
 class JWTTest extends TestCase
 {
@@ -17,7 +17,7 @@ class JWTTest extends TestCase
         $user->setId($userId);
         $user->setEmail($userEmail);
 
-        $jwt = new JWT('test_secret');
+        $jwt = new Jwt('test_secret');
         $token = $jwt->encodeUser($user);
         $decodedUser = $jwt->decodeToken($token);
 

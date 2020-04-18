@@ -5,7 +5,7 @@ namespace Pich\User\Domain;
 use Firebase\JWT\JWT as JWTLib;
 use Pich\User\Domain\DTO\User;
 
-class JWT
+class Jwt
 {
     private string $secretKey;
 
