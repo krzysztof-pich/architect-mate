@@ -61,4 +61,24 @@ class ResponderTest extends TestCase
             ]
         );
     }
+
+    public function testNotFoundError(): void
+    {
+        $statusMessage = 'Item Not found';
+        $payload = new PayloadDTO();
+        $payload->setStatus(PayloadDTO::NOT_FOUND);
+        $payload->setStatusMessage($statusMessage);
+
+        /** @var AbstractResponder $responder */
+        $responder = p::partialMock(AbstractResponder::class, $this->json);
+        $responder->setPayload($payload);
+        $responder->send();
+
+        p::verify($this->json)->setStatus(404);
+        p::verify($this->json)->setData(
+            [
+                'error' => $statusMessage
+            ]
+        );
+    }
 }

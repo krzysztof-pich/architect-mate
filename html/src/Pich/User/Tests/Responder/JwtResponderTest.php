@@ -37,4 +37,21 @@ class JwtResponderTest extends TestCase
             ]
         );
     }
+
+    public function testNotFoundData(): void
+    {
+        $payload = new PayloadDTO();
+        $payload->setStatus(PayloadDTO::NOT_FOUND);
+        $payload->setStatusMessage('Status message');
+
+        $jwtResponder = new JwtResponder($this->json);
+        $jwtResponder->setPayload($payload);
+        $jwtResponder->send();
+
+        p::verify($this->json)->setData(
+            [
+                'error' => 'Status message'
+            ]
+        );
+    }
 }

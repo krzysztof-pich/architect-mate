@@ -21,7 +21,6 @@ class Login implements ActionInterface
 
     public function execute(RequestInterface $request): ResponseInterface
     {
-        echo 'jest';exit;
         $payload = $this->userAuthenticator->authorize(
             (string)$request->getParam('email'),
             (string)$request->getParam('password')

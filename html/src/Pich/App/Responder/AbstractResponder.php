@@ -41,6 +41,17 @@ abstract class AbstractResponder
             return $this->json;
         }
 
+        if ($this->payload->getStatus() === PayloadDTO::NOT_FOUND) {
+            $this->json->setStatus(404);
+            $this->json->setData(
+                [
+                    'error' => $this->payload->getStatusMessage() ?: 'Item not found'
+                ]
+            );
+            return $this->json;
+        }
+
+
         $this->renderPayloadData();
         return $this->json;
     }
